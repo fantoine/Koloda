@@ -657,7 +657,7 @@ open class KolodaView: UIView, DraggableCardDelegate {
         if !visibleIndexes.isEmpty {
             proceedDeletionInRange(CountableRange(visibleIndexes[0]...visibleIndexes[visibleIndexes.count - 1]))
         }
-        currentCardIndex -= Array(indexRange).filter { $0 < currentCardIndex }.count
+        currentCardIndex += Array(indexRange).filter { $0 < currentCardIndex }.count
         loadMissingCards(missingCardsCount())
         layoutDeck()
         for (index, card) in visibleCards.enumerated() {
