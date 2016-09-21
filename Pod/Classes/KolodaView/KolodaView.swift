@@ -610,7 +610,7 @@ open class KolodaView: UIView, DraggableCardDelegate {
         
         let currentItemsCount = countOfCards
         countOfCards = Int(dataSource.kolodaNumberOfCards(self))
-        
+
         let visibleIndexes = [Int](indexRange).filter { $0 >= currentCardIndex && $0 < currentCardIndex + countOfVisibleCards }
         let insertedCards = insertVisibleCardsWithIndexes(visibleIndexes.sorted())
         let cardsToRemove = visibleCards.dropFirst(countOfVisibleCards).map { $0 }
@@ -653,12 +653,11 @@ open class KolodaView: UIView, DraggableCardDelegate {
         animating = true
         let currentItemsCount = countOfCards
         countOfCards = Int(dataSource.kolodaNumberOfCards(self))
-        
         let visibleIndexes = [Int](indexRange).filter { $0 >= currentCardIndex && $0 < currentCardIndex + countOfVisibleCards }
         if !visibleIndexes.isEmpty {
-            proceedDeletionInRange(visibleIndexes[0]..<(visibleIndexes[visibleIndexes.count - 1] + 1))
+            proceedDeletionInRange(CountableRange(visibleIndexes[0]...visibleIndexes[visibleIndexes.count - 1]))
         }
-        currentCardIndex += Array(indexRange).filter { $0 < currentCardIndex }.count
+        currentCardIndex -= Array(indexRange).filter { $0 < currentCardIndex }.count
         loadMissingCards(missingCardsCount())
         layoutDeck()
         for (index, card) in visibleCards.enumerated() {
